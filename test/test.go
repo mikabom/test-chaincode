@@ -938,7 +938,8 @@ func (t *SimpleChaincode) get_data(stub shim.ChaincodeStubInterface, userID stri
 	err = json.Unmarshal(bytes, &data)
 
 	if err != nil {
-		return nil, errors.New("Corrupt Data_Holder")
+		return nil, err
+		//		return nil, errors.New("Corrupt Data_Holder")
 	}
 
 	result, err := json.Marshal(data)

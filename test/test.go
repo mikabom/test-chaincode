@@ -465,19 +465,19 @@ func (t *SimpleChaincode) create_data(stub shim.ChaincodeStubInterface, userID s
 	//getState(userID)
 	record, err := stub.GetState(userID) // If not an error then a record exists so cant create a new car with this V5cID as it must be unique
 
-	if record != nil {
-		return nil, errors.New("Data already exists")
-	}
-
 	var v Data_Holder
+	v.userID = userID
 
-	err = json.Unmarshal(record, &v)
+	logger.Info("record1: ", record)
 
-	if err != nil {
-		return nil, errors.New("Corrupt Data_Holder record")
+	if record != nil {
+		err = json.Unmarshal(record, &v)
+		logger.Info("record2: ", record)
+		logger.Info("v2: ", v)
+		if err != nil {
+			return nil, errors.New("Corrupt Data_Holder record")
+		}
 	}
-
-	//var hlist = []HosuuData{hosuu}
 
 	v.hosuu = append(v.hosuu, hosuu)
 
